@@ -27,35 +27,32 @@ func getRandBool(chance : float):
 func setCell(i : int, j : int, mytype : String):
 	match mytype:
 		"fire":
-			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
-		"tree":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(8,8),0)
+		"tree":
+			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
 		"empty":
 			tilemap().erase_cell(Vector2(i,j))
 		_:
 			print("How did this happen?")
-	
 
 func mainThread(width, height):
 	for i in range(width):
 		for j in range(height):
-			setCell(i,j,"fire")
-			setCell(1,1,"empty")
-				
+			setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
-	print(getTileType(3,3))
-	print(getTileType(10,10))
 	
-		
+	
+
 func _ready():
 	# tree = [5,5]
 	# fire = [8,8]
-	print("hello!")
 	#randomize() # necessary for rng?
-	var width:int = 3
-	var height:int = 4
-	mainThread(10, 10)
-	
-	
-func _process(delta):
 	pass
+
+func _process(delta):
+	var width:int = 10
+	var height:int = 10
+	mainThread(width,height)
+	
+#func _on_tile_map_layer_ready() -> void:
+#	mainThread(10,10)
