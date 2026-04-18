@@ -35,11 +35,6 @@ func setCell(i : int, j : int, mytype : String):
 		_:
 			print("How did this happen?")
 
-func mainThread(width, height):
-	for i in range(width):
-		for j in range(height):
-			setCell(i,j,"tree")
-	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 	
 	
 
@@ -52,7 +47,11 @@ func _ready():
 func _process(delta):
 	var width:int = 10
 	var height:int = 10
-	mainThread(width,height)
-	
+	for i in range(width):
+		for j in range(height):
+			setCell(i,j,"tree")
+			getTileType(i,j)
+	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
+
 #func _on_tile_map_layer_ready() -> void:
 #	mainThread(10,10)

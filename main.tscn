@@ -185,11 +185,3 @@ script = ExtResource("1_h2yge")
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1301626593]
 tile_set = SubResource("TileSet_h2yge")
 script = ExtResource("2_0xm2m")
-
-[node name="Button" type="Button" parent="." unique_id=812325243]
-offset_left = 204.0
-offset_top = 33.0
-offset_right = 248.0
-offset_bottom = 58.0
-
-[connection signal="pressed" from="Button" to="TileMapLayer" method="_on_button_pressed"]
