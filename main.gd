@@ -8,6 +8,7 @@ func tilemap():
 func checkValid(x, y, width, height):
 	pass
 	
+# given (x,y) coordinates of the world grid, get tile name as string
 func getTileType(x, y):
 	var tile = tilemap().get_cell_tile_data(Vector2(x,y))
 	if !tile:
@@ -22,15 +23,25 @@ func getRandBool(chance : float):
 		return true
 	else:
 		return false
+		
+func setCell(i : int, j : int, mytype : String):
+	match mytype:
+		"fire":
+			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
+		"tree":
+			tilemap().set_cell(Vector2(i,j),0,Vector2(8,8),0)
+		"empty":
+			tilemap().erase_cell(Vector2(i,j))
+		_:
+			print("How did this happen?")
+	
 
 func mainThread(width, height):
-	while (true):
-		for i in range(width):
-			for j in range(height):
-				tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
-	tilemap().set_cell(Vector2(3,3),0,Vector2(8,8),0)
-	print(tilemap().get_cell_tile_data(Vector2(3,3)))
-	print(tilemap().get_cell_atlas_coords(Vector2(3,3)))
+	for i in range(width):
+		for j in range(height):
+			setCell(i,j,"fire")
+			setCell(1,1,"empty")
+				
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 	print(getTileType(3,3))
 	print(getTileType(10,10))
@@ -40,10 +51,10 @@ func _ready():
 	# tree = [5,5]
 	# fire = [8,8]
 	print("hello!")
-	randomize() # necessary for rng?
+	#randomize() # necessary for rng?
 	var width:int = 3
 	var height:int = 4
-	#mainThread(10, 10)
+	mainThread(10, 10)
 	
 	
 func _process(delta):
