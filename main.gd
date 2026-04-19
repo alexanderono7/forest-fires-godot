@@ -8,6 +8,9 @@ func tilemap():
 func checkValid(x, y, width, height):
 	pass
 	
+func playAudio():
+	self.get_child(1).play()
+	
 # given (x,y) coordinates of the world grid, get tile name as string
 func getTileType(x, y):
 	var tile = tilemap().get_cell_tile_data(Vector2(x,y))
@@ -25,11 +28,14 @@ func getRandBool(chance : float):
 		return false
 		
 func setCell(i : int, j : int, mytype : String):
+	var thread: Thread
 	match mytype:
 		"fire":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(8,8),0)
 		"tree":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
+			thread = Thread.new()
+			playAudio()
 		"empty":
 			tilemap().erase_cell(Vector2(i,j))
 		_:
@@ -57,7 +63,7 @@ func _process(delta):
 				"tree":
 					pass
 				"empty":
-					if getRandBool(0.001):
+					if getRandBool(0.0005):
 						setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c0y8umntp5alb" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://dhwa3vyvscme2" path="res://colored_tilemap.png" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://xxe3ki7sfmmx" path="res://tile_map_layer.gd" id="2_0xm2m"]
+[ext_resource type="AudioStream" uid="uid://tvnbp0mmqtm8" path="res://wood.wav" id="4_1bvp3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0xm2m"]
 resource_name = "default tiles"
@@ -185,3 +186,6 @@ script = ExtResource("1_h2yge")
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1301626593]
 tile_set = SubResource("TileSet_h2yge")
 script = ExtResource("2_0xm2m")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1699505814]
+stream = ExtResource("4_1bvp3")
