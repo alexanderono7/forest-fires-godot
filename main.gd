@@ -39,18 +39,26 @@ func setCell(i : int, j : int, mytype : String):
 	
 
 func _ready():
-	# tree = [5,5]
-	# fire = [8,8]
-	#randomize() # necessary for rng?
 	pass
 
 func _process(delta):
+	# tree = [5,5]
+	# fire = [8,8]
+	#randomize() # necessary for rng?
 	var width:int = 10
 	var height:int = 10
+	var mytile
 	for i in range(width):
 		for j in range(height):
-			setCell(i,j,"tree")
-			getTileType(i,j)
+			mytile = getTileType(i,j)
+			match mytile:
+				"fire":
+					setCell(i,j,"empty")
+				"tree":
+					pass
+				"empty":
+					if getRandBool(0.001):
+						setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 
 #func _on_tile_map_layer_ready() -> void:
