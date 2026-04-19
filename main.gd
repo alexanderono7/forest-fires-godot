@@ -28,21 +28,16 @@ func getRandBool(chance : float):
 		return false
 		
 func setCell(i : int, j : int, mytype : String):
-	var thread: Thread
 	match mytype:
 		"fire":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(8,8),0)
 		"tree":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
-			thread = Thread.new()
 			playAudio()
 		"empty":
 			tilemap().erase_cell(Vector2(i,j))
 		_:
 			print("How did this happen?")
-
-	
-	
 
 func _ready():
 	pass
