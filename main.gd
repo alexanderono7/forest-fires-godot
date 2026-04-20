@@ -70,8 +70,8 @@ func spread(i,j, tiletype : String):
 				if(getTileType(neighbor) == "empty"):
 					if getRandBool(0.003):
 						setCell(neighbor[0], neighbor[1], "tree")
-var width:int = 24
-var height:int = 24
+var width:int = 26
+var height:int = 26
 
 func _process(delta):
 	# tree = [5,5]
