@@ -67,8 +67,9 @@ func spread(i,j, tiletype : String):
 			setCell(i,j,"empty")
 		"tree":
 			for neighbor in neighbors:
-				if(getTileType(neighbor) == "tree"):
-					setCell(neighbor[0], neighbor[1], "tree")
+				if(getTileType(neighbor) == "empty"):
+					if getRandBool(0.005):
+						setCell(neighbor[0], neighbor[1], "tree")
 var width:int = 15
 var height:int = 15
 func _process(delta):
@@ -87,10 +88,10 @@ func _process(delta):
 					spread(i,j, "fire")
 				"tree":
 					spread(i,j, "tree")
-					if getRandBool(0.0001):
+					if getRandBool(0.0009):
 						setCell(i,j,"fire")
 				"empty":
-					if getRandBool(0.0001):
+					if getRandBool(0.0009):
 						setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 
