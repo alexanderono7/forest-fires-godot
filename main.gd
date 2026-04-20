@@ -48,11 +48,11 @@ func getNeighbors(x, y):
 	var neighbors = []
 	if(x > 0):
 		neighbors.append(Vector2(x-1,y))
-	if(x < width):
+	if(x < width - 1):
 		neighbors.append(Vector2(x+1,y))
 	if(y > 0):
 		neighbors.append(Vector2(x,y-1))
-	if(y < height):
+	if(y < height - 1):
 		neighbors.append(Vector2(x,y+1))	
 	return neighbors
 
@@ -70,13 +70,12 @@ func spread(i,j, tiletype : String):
 				if(getTileType(neighbor) == "empty"):
 					if getRandBool(0.005):
 						setCell(neighbor[0], neighbor[1], "tree")
-var width:int = 15
-var height:int = 15
+var width:int = 20
+var height:int = 20
+
 func _process(delta):
 	# tree = [5,5]
 	# fire = [8,8]
-	#randomize() # necessary for rng?
-
 	var mytile
 	for i in range(width):
 		for j in range(height):
@@ -88,10 +87,10 @@ func _process(delta):
 					spread(i,j, "fire")
 				"tree":
 					spread(i,j, "tree")
-					if getRandBool(0.0009):
+					if getRandBool(0.0001):
 						setCell(i,j,"fire")
 				"empty":
-					if getRandBool(0.0009):
+					if getRandBool(0.00005):
 						setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 
