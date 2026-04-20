@@ -191,7 +191,7 @@ script = ExtResource("2_0xm2m")
 [node name="tree_fx" type="AudioStreamPlayer" parent="." unique_id=1699505814]
 stream = ExtResource("4_1bvp3")
 volume_db = -2.89
-max_polyphony = 99
+max_polyphony = 10
 
 [node name="fire_fx" type="AudioStreamPlayer" parent="." unique_id=1311921295]
 stream = ExtResource("5_lquwl")
