@@ -3,16 +3,19 @@ extends Node2D
 enum tiletypes {FIRE, TREE, EMPTY}
 
 func tilemap():
-	return self.get_child(0)
-
-func checkValid(x, y, width, height):
-	pass
+	return self.get_child(0)	
 	
-func playAudio():
-	self.get_child(1).play()
-	
+func playAudio(foo : int):
+	match foo:
+		0:
+			self.get_child(1).play()
+		1:
+			self.get_child(2).play()
+			
 # given (x,y) coordinates of the world grid, get tile name as string
-func getTileType(x, y):
+func getTileType(foo : Vector2):
+	var x = foo[0]
+	var y = foo[1]
 	var tile = tilemap().get_cell_tile_data(Vector2(x,y))
 	if !tile:
 		return "empty"
@@ -31,34 +34,63 @@ func setCell(i : int, j : int, mytype : String):
 	match mytype:
 		"fire":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(8,8),0)
+			playAudio(1)
 		"tree":
 			tilemap().set_cell(Vector2(i,j),0,Vector2(5,5),0)
-			playAudio()
+			playAudio(0)
 		"empty":
 			tilemap().erase_cell(Vector2(i,j))
 		_:
 			print("How did this happen?")
 
-func _ready():
-	pass
+func getNeighbors(x, y):
+	#var neighbors = [Vector2(x+1,y),Vector2(x,y+1),Vector2(x-1,y),Vector2(x,y-1)]
+	var neighbors = []
+	if(x > 0):
+		neighbors.append(Vector2(x-1,y))
+	if(x < width):
+		neighbors.append(Vector2(x+1,y))
+	if(y > 0):
+		neighbors.append(Vector2(x,y-1))
+	if(y < height):
+		neighbors.append(Vector2(x,y+1))	
+	return neighbors
 
+# spread! either tree or fire
+func spread(i,j, tiletype : String):
+	var neighbors = getNeighbors(i,j)
+	match tiletype:
+		"fire":
+			for neighbor in neighbors:
+				if(getTileType(neighbor) == "tree"):
+					setCell(neighbor[0], neighbor[1], "fire")
+			setCell(i,j,"empty")
+		"tree":
+			for neighbor in neighbors:
+				if(getTileType(neighbor) == "tree"):
+					setCell(neighbor[0], neighbor[1], "tree")
+var width:int = 15
+var height:int = 15
 func _process(delta):
 	# tree = [5,5]
 	# fire = [8,8]
 	#randomize() # necessary for rng?
-	var width:int = 10
-	var height:int = 10
+
 	var mytile
 	for i in range(width):
 		for j in range(height):
-			mytile = getTileType(i,j)
+			var coords = Vector2(i,j)
+			mytile = getTileType(coords)
 			match mytile:
 				"fire":
 					setCell(i,j,"empty")
+					spread(i,j, "fire")
 				"tree":
-					pass
+					spread(i,j, "tree")
+					if getRandBool(0.0001):
+						setCell(i,j,"fire")
 				"empty":
-					if getRandBool(0.0005):
+					if getRandBool(0.0001):
 						setCell(i,j,"tree")
 	#print(tilemap().get_cell_tile_data(Vector2(3,3)).get_custom_data("forest_fire_dl")) # get name of tile at given coords of the actual "game grid"
 
